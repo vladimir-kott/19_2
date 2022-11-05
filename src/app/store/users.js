@@ -151,8 +151,8 @@ export const updateUser = ({ payload, redirect }) => async (dispatch) =>{
     console.log("dispatch", dispatch)
 
     try {
-        const data = await authService.update(payload);
-        dispatch(userUpdated(data));
+        const data = await authService.update({payload});
+       // dispatch(userUpdated(data));
         history.push(redirect);
     } catch (error) {
         dispatch(updateRequestFailed(error.message));
