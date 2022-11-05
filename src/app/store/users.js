@@ -57,6 +57,9 @@ const usersSlice = createSlice({
             state.dataLoaded = true;
             state.isLoading = false;
         },
+        updateRequestFailed: (state, action) => {
+            state.error = action.payload;
+        },
         userLoggedOut: (state) => {
             state.entities = null;
             state.isLoggedIn = false;
@@ -75,6 +78,7 @@ const {
     authRequestFailed,
     userCreated,
     userUpdated,
+    updateRequestFailed,
     userLoggedOut
 } = actions;
 
@@ -146,13 +150,12 @@ export const updateUser = ({ payload, redirect }) => async (dispatch) =>{
     console.log("redirect", redirect)
     console.log("dispatch", dispatch)
 
-    dispatch(authRequested());
     try {
-         const data = await authService.update(payload);
-        dispatch(authRequestSuccess({ userId: data.localId }));
+        const data = await authService.update(payload);
+        dispatch(userUpdated(data));
         history.push(redirect);
     } catch (error) {
-        dispatch(authRequestFailed(error.message));
+        dispatch(updateRequestFailed(error.message));
     }
     /*try {
         const { content } = await userService.update(data);
