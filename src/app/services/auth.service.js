@@ -33,15 +33,12 @@ const authService = {
         });
         return data;
     },
-    update: async (payload) => {
-        console.log('payload ', payload)
-        const { data } = await httpAuth.post(`accounts:update`,{
-            localId: localStorageService.getUserId,
-            payload,
-            returnSecureToken: true
-        });
-        console.log('data ) ', data)
-        return data;
+    update: async (...payload) => {
+       /* const { data } = await httpAuth.patch("accounts:update/"
+            + localStorageService.getUserId(),
+            payload
+        );
+        return data;*/
     }
 };
 
